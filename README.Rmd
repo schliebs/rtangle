@@ -1,0 +1,190 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# rtangle
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/ggecon)](https://CRAN.R-project.org/package=ggecon)
+<!-- badges: end -->
+
+
+## Installation and Loading
+
+``` r
+devtools::install_github("schliebs/rtangle")
+```
+
+```{r message = F,warning = F}
+library(rtangle)
+library(dplyr)
+library(purrr)
+```
+
+## API Authentication
+
+There are two options to set a CT API token and save it in the system environment. The first one is to trigger an RStudio window opening, and entering the token.
+
+```{r,eval = F}
+set_crowdtangle_token(option = "enter")
+```
+
+The second option is to store the CT token as a txt file in a secure local location that is not synched with git or shared with other users.
+
+```{r,eval = F}
+set_crowdtangle_token(option = "txt",
+                      tokenpath = "./nogit/confidential/CT_token.txt")
+```
+
+Now, when calling a function that uses the API, the token can be passed by using `crowdtangle_token()` as an argument to the function. 
+
+```{r,eval = F}
+crowdtangle_token()
+```
+
+## CT Post Search
+
+With the `posts_search` wrapper, you can search posts, either globally within the whole CT database, or within a limited set of `AccountIds` or `ListIds`. Note that this endpoint is not available to all customers and needs to be requested and approved by the CT team. 
+
+Currently, the following parameters are available withint post_search
+
+```{r,eval = F}
+posts_search(
+  token,
+  accountTypes = NULL,
+  and = NULL,
+  brandedContent = "no_filter",
+  count = 10,
+  endDate = rtangle:::ct_now(),
+  includeHistory = NULL,
+  inAccountIds = NULL,
+  inListIds = NULL,
+  language = NULL,
+  minInteractions = 0,
+  minSubscriberCount = 0,
+  not = NULL,
+  notInAccountIds = NULL,
+  notInLstIds = NULL,
+  notInTitle = NULL,
+  offset = 0,
+  pageAdminTopCountry = NULL,
+  platforms = NULL,
+  searchField = "text_fields_and_image_text",
+  searchTerm = "",
+  startDate = NULL,
+  sortBy = "date",
+  timeframe = NULL,
+  types = NULL,
+  verified = "no_filter",
+  verifiedOnly = "false",
+  search10k = FALSE,
+  boolean_allowed = FALSE,
+  output_raw = TRUE
+)
+```
+
+See further `help(posts_search)` for additional infomation on available options and parameters.
+
+As an example, we query the API for all posts made by CNN's Facebook page in November 2020 which contained the term 'Trump'. We also limit the results to posts on Facebook, and specify that our accoun has elevated search priviledges, allowing us to pull 10,000 posts at a time. 
+
+```{r}
+cnn_postlist <- 
+  posts_search(token = crowdtangle_token(),
+               inAccountIds = "8323", #CNN CT ID obtained via `list_details()`
+               searchTerm = "Trump",
+               startDate = "2020-11-01T00:00:00",
+               endDate = "2020-11-30T23:59:59",
+               count = 10000,
+               sortBy = 'date',
+               platforms = 'facebook',
+               search10k = T,
+               boolean_allowed = T,
+               output_raw = TRUE)
+```
+```{r}
+class(cnn_postlist)
+```
+
+```{r}
+length(cnn_postlist)
+```
+```{r}
+cnn_postlist[[1]] %>% str()
+```
+
+
+## Parsing Posts
+
+We can now parse the list of `CT Post` objects into an R data.frame:
+
+```{r}
+cnn_df <- cnn_postlist %>% parse_posts()
+```
+
+```{r}
+names(cnn_df)
+```
+
+```{r,message = F,warning = F}
+library(ggplot2)
+
+cnn_by_day <- 
+  cnn_df %>% 
+  mutate(day = date %>% 
+           lubridate::as_datetime() %>% 
+           lubridate::round_date(unit = "day")) %>% 
+  group_by(day) %>% 
+  summarise(n = n())
+
+ggplot(cnn_by_day,
+       aes(x = day,
+           y = n)) + 
+  geom_line() + 
+  geom_point() +
+  labs(x = "Day",
+       y = "CNN Posts mentioning 'Trump'")
+```
+
+
+## Link Search
+
+t.b.c.
+
+
+## Adaptive Time-Frame adjustment and Pagination
+
+t.b.c.
+
+
+## Additional Helper Functions made available via Namespace Export
+
+
+### Adaptive Waiting and Sleeping to Respect API Limits
+
+Continue script after 20:30:34 on November 14th 2020
+
+```{r,eval = F}
+continue_at <- lubridate::as_datetime("2020-11-14 20:30:34")
+wait_till(resume = continue_at, seconds = 12)
+```
+
+Continue script 60 seconds after the last call was made:
+
+```{r,eval = F}
+last_timestamp <- lubridate::now()
+# ... (Some function is executed)
+wait_till(from = last_timestamp, seconds = 60)
+```
+
