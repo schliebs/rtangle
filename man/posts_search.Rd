@@ -103,7 +103,7 @@ Pulls posts
 }
 \examples{
 # Pull all posts from November 2020 by CNN containing the term "Trump"
-out <- posts_search(token = crowdtangle_token(),
+postlist <- posts_search(token = crowdtangle_token(),
                     inAccountIds = "8323", #CNN example
                     searchTerm = "Trump",
                     startDate = "2020-11-01T00:00:00",

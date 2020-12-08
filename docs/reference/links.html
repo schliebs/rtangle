@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>R Interface for — posts_search • rtangle</title>
+<title>R Interface for CT Link Search — links • rtangle</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="R Interface for — posts_search" />
-<meta property="og:description" content="Pulls posts" />
+<meta property="og:title" content="R Interface for CT Link Search — links" />
+<meta property="og:description" content="Searches for link shares by public pages, groups, profiles on FB/IG" />
 
 
 
@@ -103,45 +103,27 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>R Interface for</h1>
+    <h1>R Interface for CT Link Search</h1>
     
-    <div class="hidden name"><code>posts_search.Rd</code></div>
+    <div class="hidden name"><code>links.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Pulls posts</p>
+    <p>Searches for link shares by public pages, groups, profiles on FB/IG</p>
     </div>
 
-    <pre class="usage"><span class='fu'>posts_search</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>links</span><span class='op'>(</span>
   <span class='va'>token</span>,
-  accountTypes <span class='op'>=</span> <span class='cn'>NULL</span>,
-  and <span class='op'>=</span> <span class='cn'>NULL</span>,
-  brandedContent <span class='op'>=</span> <span class='st'>"no_filter"</span>,
-  count <span class='op'>=</span> <span class='fl'>10</span>,
+  count <span class='op'>=</span> <span class='fl'>100</span>,
   endDate <span class='op'>=</span> <span class='fu'>ct_now</span><span class='op'>(</span><span class='op'>)</span>,
   includeHistory <span class='op'>=</span> <span class='cn'>NULL</span>,
-  inAccountIds <span class='op'>=</span> <span class='cn'>NULL</span>,
-  inListIds <span class='op'>=</span> <span class='cn'>NULL</span>,
-  language <span class='op'>=</span> <span class='cn'>NULL</span>,
-  minInteractions <span class='op'>=</span> <span class='fl'>0</span>,
-  minSubscriberCount <span class='op'>=</span> <span class='fl'>0</span>,
-  not <span class='op'>=</span> <span class='cn'>NULL</span>,
-  notInAccountIds <span class='op'>=</span> <span class='cn'>NULL</span>,
-  notInLstIds <span class='op'>=</span> <span class='cn'>NULL</span>,
-  notInTitle <span class='op'>=</span> <span class='cn'>NULL</span>,
+  link <span class='op'>=</span> <span class='cn'>NULL</span>,
+  includeSummary <span class='op'>=</span> <span class='st'>"false"</span>,
   offset <span class='op'>=</span> <span class='fl'>0</span>,
-  pageAdminTopCountry <span class='op'>=</span> <span class='cn'>NULL</span>,
   platforms <span class='op'>=</span> <span class='cn'>NULL</span>,
-  searchField <span class='op'>=</span> <span class='st'>"text_fields_and_image_text"</span>,
-  searchTerm <span class='op'>=</span> <span class='st'>""</span>,
+  searchField <span class='op'>=</span> <span class='cn'>NULL</span>,
   startDate <span class='op'>=</span> <span class='cn'>NULL</span>,
   sortBy <span class='op'>=</span> <span class='st'>"date"</span>,
-  timeframe <span class='op'>=</span> <span class='cn'>NULL</span>,
-  types <span class='op'>=</span> <span class='cn'>NULL</span>,
-  verified <span class='op'>=</span> <span class='st'>"no_filter"</span>,
-  verifiedOnly <span class='op'>=</span> <span class='st'>"false"</span>,
-  search10k <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  boolean_allowed <span class='op'>=</span> <span class='cn'>FALSE</span>,
   output_raw <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
@@ -151,18 +133,6 @@
     <tr>
       <th>token</th>
       <td><p>A valid CT API Token</p></td>
-    </tr>
-    <tr>
-      <th>accountTypes</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>and</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>brandedContent</th>
-      <td><p>...</p></td>
     </tr>
     <tr>
       <th>count</th>
@@ -177,48 +147,16 @@
       <td><p>...</p></td>
     </tr>
     <tr>
-      <th>inAccountIds</th>
-      <td><p>...</p></td>
+      <th>link</th>
+      <td><p>A URL</p></td>
     </tr>
     <tr>
-      <th>inListIds</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>language</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>minInteractions</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>minSubscriberCount</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>not</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>notInAccountIds</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>notInLstIds</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>notInTitle</th>
-      <td><p>...</p></td>
+      <th>includeSummary</th>
+      <td><p>... (Defaults to "false")</p></td>
     </tr>
     <tr>
       <th>offset</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>pageAdminTopCountry</th>
-      <td><p>...</p></td>
+      <td><p>... (Usually you want to leave this at 0 and paginate via dates only)</p></td>
     </tr>
     <tr>
       <th>platforms</th>
@@ -226,10 +164,6 @@
     </tr>
     <tr>
       <th>searchField</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>searchTerm</th>
       <td><p>...</p></td>
     </tr>
     <tr>
@@ -241,30 +175,6 @@
       <td><p>...</p></td>
     </tr>
     <tr>
-      <th>timeframe</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>types</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>verified</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>verifiedOnly</th>
-      <td><p>...</p></td>
-    </tr>
-    <tr>
-      <th>search10k</th>
-      <td><p>A boolean signifying whether you have elavated access for higher count numbers.</p></td>
-    </tr>
-    <tr>
-      <th>boolean_allowed</th>
-      <td><p>A boolean signifying whether you have boolean term search enabled.</p></td>
-    </tr>
-    <tr>
       <th>output_raw</th>
       <td><p>A boolean signifying whether to output raw CT output or parse into df. Defaulting to <code>TRUE</code>.</p></td>
     </tr>
@@ -272,21 +182,19 @@
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Pull all posts from November 2020 by CNN containing the term "Trump"</span>
-<span class='va'>postlist</span> <span class='op'>&lt;-</span> <span class='fu'>posts_search</span><span class='op'>(</span>token <span class='op'>=</span> <span class='fu'><a href='crowdtangle_token.html'>crowdtangle_token</a></span><span class='op'>(</span><span class='op'>)</span>,
-                    inAccountIds <span class='op'>=</span> <span class='st'>"8323"</span>, <span class='co'>#CNN example</span>
-                    searchTerm <span class='op'>=</span> <span class='st'>"Trump"</span>,
-                    startDate <span class='op'>=</span> <span class='st'>"2020-11-01T00:00:00"</span>,
-                    endDate <span class='op'>=</span> <span class='st'>"2020-11-30T23:59:59"</span>,
-                    count <span class='op'>=</span> <span class='fl'>10000</span>,
-                    sortBy <span class='op'>=</span> <span class='st'>'date'</span>,
-                    platforms <span class='op'>=</span> <span class='st'>'facebook'</span>,
-                    search10k <span class='op'>=</span> <span class='cn'>T</span>,
-                    boolean_allowed <span class='op'>=</span> <span class='cn'>T</span>,
-                    output_raw <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "collecting posts"
-#&gt; [1] "try for the 1th time."
-#&gt; [1] "now collected 272 entries"</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>postlist</span> <span class='op'>&lt;-</span>
+<span class='fu'>links</span><span class='op'>(</span>token <span class='op'>=</span> <span class='fu'><a href='crowdtangle_token.html'>crowdtangle_token</a></span><span class='op'>(</span><span class='op'>)</span>,
+      count <span class='op'>=</span> <span class='fl'>1000</span>,
+      endDate <span class='op'>=</span> <span class='st'>'2020-12-31'</span>,
+      includeHistory <span class='op'>=</span> <span class='cn'>NULL</span>,
+      link <span class='op'>=</span> <span class='va'>link</span>,
+      includeSummary<span class='op'>=</span> <span class='st'>'false'</span>,
+      offset <span class='op'>=</span> <span class='fl'>0</span>,
+      platforms <span class='op'>=</span> <span class='st'>'facebook'</span>,
+      searchField <span class='op'>=</span> <span class='st'>'Include_query_strings'</span>,
+      startDate <span class='op'>=</span> <span class='st'>'2020-06-01T00:00:00'</span>,
+      sortBy <span class='op'>=</span> <span class='st'>'date'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "collecting link shares"</div><div class='output co'>#&gt; <span class='error'>Error in links(token = crowdtangle_token(), count = 1000, endDate = "2020-12-31",     includeHistory = NULL, link = link, includeSummary = "false",     offset = 0, platforms = "facebook", searchField = "Include_query_strings",     startDate = "2020-06-01T00:00:00", sortBy = "date"): object 'link' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -160,8 +160,47 @@ ggplot(cnn_by_day,
 
 ## Link Search
 
-t.b.c.
+Search all link shares of "rt.com" on December 7th, 2020
 
+```{r}
+rt_postlist <-
+ links(token = crowdtangle_token(),
+       count = 1000,
+       endDate = '2020-12-07T23:59:59',
+       includeHistory = NULL,
+       link = "rt.com",
+       includeSummary= 'false',
+       offset = 0,
+       platforms = 'facebook',
+       searchField = 'Include_query_strings',
+       startDate = '2020-12-07T00:00:00',
+       sortBy = 'date')
+```
+
+
+```{r}
+rt_df <- 
+  rt_postlist %>% 
+  parse_posts()
+```
+
+```{r}
+rt_df %>% 
+  arrange(desc(statistics.actual.likeCount)) %>% 
+  select(date,link,subscriberCount,statistics.actual.likeCount,title) %>% 
+  mutate(title = title %>% stringr::str_sub(1,50))%>%
+  mutate(link = link %>% stringr::str_sub(1,10))%>%
+  head()
+```
+```{r}
+rt_df %>% 
+  group_by(link) %>% 
+  summarise(likes = sum(statistics.actual.likeCount,na.rm = T),
+            audience = sum(subscriberCount,na.rm = T)) %>% 
+  arrange(desc(likes)) %>% 
+  mutate(link = link %>% stringr::str_sub(1,70))%>%
+  head(20)
+```
 
 ## Adaptive Time-Frame adjustment and Pagination
 
@@ -169,7 +208,6 @@ t.b.c.
 
 
 ## Additional Helper Functions made available via Namespace Export
-
 
 ### Adaptive Waiting and Sleeping to Respect API Limits
 

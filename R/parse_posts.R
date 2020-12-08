@@ -23,6 +23,23 @@
 #' # Parse postlist to R data.frame
 #' cnn_df <- cnn_postlist %>% parse_posts()
 #'
+#' # Pull all link shares with URLs containing "rt.com" on December 7th, 2020
+#' rt_postlist <-
+#' links(token = crowdtangle_token(),
+#'       count = 1000,
+#'       endDate = '2020-12-07T23:59:59',
+#'       includeHistory = NULL,
+#'       link = "rt.com",
+#'       includeSummary= 'false',
+#'       offset = 0,
+#'       platforms = 'facebook',
+#'       searchField = 'Include_query_strings',
+#'       startDate = '2020-12-07T00:00:00',
+#'       sortBy = 'date')
+#'
+#'  # Parse postlist to R data.frame
+#' rt_df <- rt_postlist %>% parse_posts()
+#'
 parse_posts <- function(postlist,
                         ...
                          ){

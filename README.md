@@ -115,7 +115,7 @@ cnn_postlist <-
                output_raw = TRUE)
 #> [1] "collecting posts"
 #> [1] "try for the 1th time."
-#> [1] "now collected 256 entries"
+#> [1] "now collected 272 entries"
 ```
 
 ``` r
@@ -125,71 +125,71 @@ class(cnn_postlist)
 
 ``` r
 length(cnn_postlist)
-#> [1] 256
+#> [1] 272
 ```
 
 ``` r
 cnn_postlist[[1]] %>% str()
 #> List of 18
-#>  $ platformId     : chr "5550296508_10161507602146509"
+#>  $ platformId     : chr "5550296508_10161518326346509"
 #>  $ platform       : chr "Facebook"
-#>  $ date           : chr "2020-11-27 11:31:10"
-#>  $ updated        : chr "2020-11-27 11:56:12"
+#>  $ date           : chr "2020-11-30 21:30:37"
+#>  $ updated        : chr "2020-12-07 16:34:29"
 #>  $ type           : chr "link"
-#>  $ title          : chr "Analysis: Trump's loss dealt a blow to global populism. But the movement is still alive and kicking"
+#>  $ title          : chr "Trump said the stock market would crash if Biden won. The Dow is having its best month since 1987."
 #>  $ caption        : chr "cnn.com"
-#>  $ message        : chr "\"For four years, Donald Trump has been the world's standard-bearer for right-wing populism. The movement didn'"| __truncated__
+#>  $ message        : chr "President Donald J. Trump repeatedly warned Americans that if they failed to reelect him, the stock market woul"| __truncated__
 #>  $ expandedLinks  :List of 1
 #>   ..$ :List of 2
-#>   .. ..$ original: chr "https://cnn.it/3la7e28"
-#>   .. ..$ expanded: chr "https://www.cnn.com/2020/11/27/world/trump-election-defeat-populism-global-intl/index.html?utm_source=fbCNN&utm"| __truncated__
-#>  $ link           : chr "https://cnn.it/3la7e28"
-#>  $ postUrl        : chr "https://www.facebook.com/cnn/posts/10161507602146509"
-#>  $ subscriberCount: int 34022492
-#>  $ score          : num -1.44
+#>   .. ..$ original: chr "https://cnn.it/3fS1yIP"
+#>   .. ..$ expanded: chr "https://www.cnn.com/2020/11/30/business/stock-market-dow-jones-trump-biden/index.html?utm_medium=social&utm_sou"| __truncated__
+#>  $ link           : chr "https://cnn.it/3fS1yIP"
+#>  $ postUrl        : chr "https://www.facebook.com/cnn/posts/10161518326346509"
+#>  $ subscriberCount: int 34026501
+#>  $ score          : num 17.1
 #>  $ media          :List of 1
 #>   ..$ :List of 5
 #>   .. ..$ type  : chr "photo"
-#>   .. ..$ url   : chr "https://external-sea1-1.xx.fbcdn.net/safe_image.php?d=AQB2btWlfvlo2Dd4&w=619&h=619&url=https%3A%2F%2Fcdn.cnn.co"| __truncated__
+#>   .. ..$ url   : chr "https://external-sea1-1.xx.fbcdn.net/safe_image.php?d=AQBLnCLBTxgZBFRx&w=619&h=619&url=https%3A%2F%2Fcdn.cnn.co"| __truncated__
 #>   .. ..$ height: int 619
 #>   .. ..$ width : int 619
-#>   .. ..$ full  : chr "https://external-sea1-1.xx.fbcdn.net/safe_image.php?d=AQAViJl0LunEsYCD&url=https%3A%2F%2Fcdn.cnn.com%2Fcnnnext%"| __truncated__
+#>   .. ..$ full  : chr "https://external-sea1-1.xx.fbcdn.net/safe_image.php?d=AQBdtsImuhon9qEa&url=https%3A%2F%2Fcdn.cnn.com%2Fcnnnext%"| __truncated__
 #>  $ statistics     :List of 2
 #>   ..$ actual  :List of 10
-#>   .. ..$ likeCount    : int 290
-#>   .. ..$ shareCount   : int 54
-#>   .. ..$ commentCount : int 206
-#>   .. ..$ loveCount    : int 7
-#>   .. ..$ wowCount     : int 6
-#>   .. ..$ hahaCount    : int 36
-#>   .. ..$ sadCount     : int 14
-#>   .. ..$ angryCount   : int 79
+#>   .. ..$ likeCount    : int 52914
+#>   .. ..$ shareCount   : int 7828
+#>   .. ..$ commentCount : int 22180
+#>   .. ..$ loveCount    : int 9397
+#>   .. ..$ wowCount     : int 468
+#>   .. ..$ hahaCount    : int 27454
+#>   .. ..$ sadCount     : int 65
+#>   .. ..$ angryCount   : int 171
 #>   .. ..$ thankfulCount: int 0
-#>   .. ..$ careCount    : int 0
+#>   .. ..$ careCount    : int 240
 #>   ..$ expected:List of 10
-#>   .. ..$ likeCount    : int 403
-#>   .. ..$ shareCount   : int 90
-#>   .. ..$ commentCount : int 332
-#>   .. ..$ loveCount    : int 43
-#>   .. ..$ wowCount     : int 22
-#>   .. ..$ hahaCount    : int 36
-#>   .. ..$ sadCount     : int 37
-#>   .. ..$ angryCount   : int 36
+#>   .. ..$ likeCount    : int 4129
+#>   .. ..$ shareCount   : int 514
+#>   .. ..$ commentCount : int 1492
+#>   .. ..$ loveCount    : int 212
+#>   .. ..$ wowCount     : int 149
+#>   .. ..$ hahaCount    : int 232
+#>   .. ..$ sadCount     : int 175
+#>   .. ..$ angryCount   : int 152
 #>   .. ..$ thankfulCount: int 0
-#>   .. ..$ careCount    : int 6
+#>   .. ..$ careCount    : int 61
 #>  $ account        :List of 11
 #>   ..$ id                 : int 8323
 #>   ..$ name               : chr "CNN"
 #>   ..$ handle             : chr "cnn"
-#>   ..$ profileImage       : chr "https://scontent-sea1-1.xx.fbcdn.net/v/t31.0-1/p200x200/12304053_10154246192721509_1897912583584847639_o.png?_n"| __truncated__
-#>   ..$ subscriberCount    : int 34022492
+#>   ..$ profileImage       : chr "https://scontent-sjc3-1.xx.fbcdn.net/v/t31.0-1/p200x200/12304053_10154246192721509_1897912583584847639_o.png?_n"| __truncated__
+#>   ..$ subscriberCount    : int 34036958
 #>   ..$ url                : chr "https://www.facebook.com/5550296508"
 #>   ..$ platform           : chr "Facebook"
 #>   ..$ platformId         : chr "5550296508"
 #>   ..$ accountType        : chr "facebook_page"
 #>   ..$ pageAdminTopCountry: chr "US"
 #>   ..$ verified           : logi TRUE
-#>  $ newId          : chr "8323|10161507602146509"
+#>  $ newId          : chr "8323|10161518326346509"
 #>  $ id             : num 1.12e+11
 ```
 
@@ -258,7 +258,92 @@ ggplot(cnn_by_day,
 
 ## Link Search
 
-t.b.c.
+Search all link shares of “rt.com” on December 7th, 2020
+
+``` r
+rt_postlist <-
+ links(token = crowdtangle_token(),
+       count = 1000,
+       endDate = '2020-12-07T23:59:59',
+       includeHistory = NULL,
+       link = "rt.com",
+       includeSummary= 'false',
+       offset = 0,
+       platforms = 'facebook',
+       searchField = 'Include_query_strings',
+       startDate = '2020-12-07T00:00:00',
+       sortBy = 'date')
+#> [1] "collecting link shares"
+#> [1] "try for the 1th time."
+#> [1] "resetting END DATE to 2020-12-07T17:33:57"
+#> [1] "Pausing Scripts until 2020-12-08 10:43:28"
+#> [1] "sleep 31 secs then next batch"
+#> [1] "try for the 1th time."
+#> [1] "resetting END DATE to 2020-12-07T09:18:21"
+#> [1] "Pausing Scripts until 2020-12-08 10:44:00"
+#> [1] "sleep 31 secs then next batch"
+#> [1] "try for the 1th time."
+#> [1] "resetting END DATE to 2020-12-07T00:00:00"
+#> [1] "now collected 2558 entries"
+```
+
+``` r
+rt_df <- 
+  rt_postlist %>% 
+  parse_posts()
+```
+
+``` r
+rt_df %>% 
+  arrange(desc(statistics.actual.likeCount)) %>% 
+  select(date,link,subscriberCount,statistics.actual.likeCount,title) %>% 
+  mutate(title = title %>% stringr::str_sub(1,50))%>%
+  mutate(link = link %>% stringr::str_sub(1,50))%>%
+  head()
+#> # A tibble: 6 x 5
+#>   date      link             subscriberCount statistics.actual~ title           
+#>   <chr>     <chr>                      <int>              <int> <chr>           
+#> 1 2020-12-~ https://arabic.~        16218229              17491 "<U+0627><U+0644><U+062C><U+0632><U+0627><U+0626><U+0631> <U+062A><U+062D><U+062C><U+0632> <U+0637>~
+#> 2 2020-12-~ https://www.fac~          416724              10580  <NA>           
+#> 3 2020-12-~ https://arabic.~          783377               8768 "<U+0635><U+0644><U+0627><U+062D> <U+064A><U+0648><U+0627><U+0635><U+0644> <U+0647><U+064A><U+0645>~
+#> 4 2020-12-~ https://arabic.~        16218229               8288 "<U+062E><U+0628><U+064A><U+0631> <U+0625><U+0633><U+0631><U+0627><U+0626><U+064A><U+0644><U+064A>:~
+#> 5 2020-12-~ https://arabic.~        16218229               7180 "<U+0643><U+064A><U+0641> <U+0631><U+062F> <U+0635><U+062F><U+0627><U+0645> <U+062D><U+0633>~
+#> 6 2020-12-~ https://arabic.~        16218229               6662 "<U+0637><U+0647><U+0631><U+0627><U+0646> <U+062A><U+0631><U+062F> <U+0639><U+0644><U+0649> ~
+```
+
+``` r
+rt_df %>% 
+  group_by(link) %>% 
+  summarise(likes = sum(statistics.actual.likeCount,na.rm = T),
+            audience = sum(subscriberCount,na.rm = T)) %>% 
+  arrange(desc(likes)) %>% 
+  mutate(link = link %>% stringr::str_sub(1,70))%>%
+  head(20)
+#> `summarise()` ungrouping output (override with `.groups` argument)
+#> # A tibble: 20 x 3
+#>    link                                                           likes audience
+#>    <chr>                                                          <int>    <int>
+#>  1 https://arabic.rt.com/press/1180616-%D8%A7%D9%84%D8%AC%D8%B2%~ 17613 16863919
+#>  2 https://www.facebook.com/environman.th/photos/a.1745027465625~ 11351  1109358
+#>  3 https://arabic.rt.com/sport/1180604-%D8%B5%D9%84%D8%A7%D8%AD-~  9040 17033130
+#>  4 https://arabic.rt.com/world/1180580-%D9%83%D8%B4%D9%81-%D8%A7~  8288 16218229
+#>  5 https://arabic.rt.com/middle_east/1180637-%D8%A7%D8%AE%D8%AA%~  7492 41671880
+#>  6 https://arabic.rt.com/middle_east/1180588-%D9%83%D9%8A%D9%81-~  7187 16249241
+#>  7 https://arabic.rt.com/world/1180662-%D8%A7%D9%84%D8%AE%D8%A7%~  6662 16218229
+#>  8 https://arabic.rt.com/world/1180612-%D9%85%D9%88%D9%82%D8%B9-~  5029 16218229
+#>  9 https://arabic.rt.com/middle_east/1180904-%D8%AC%D9%8A%D9%81%~  4912 16218229
+#> 10 https://actualidad.rt.com/actualidad/376020-chavismo-lidera-e~  4832 18588103
+#> 11 https://arabic.rt.com/russia/1180897-%D8%B3%D9%8A%D9%86%D8%A7~  4707 16333114
+#> 12 https://actualidad.rt.com/actualidad/376048-farmaco-oral-moln~  4475 16949999
+#> 13 https://arabic.rt.com/world/1180607-%D8%A7%D8%AC%D8%AA%D9%81%~  4368 16334659
+#> 14 https://arabic.rt.com/world/1180896-%D8%A7%D9%84%D9%85%D9%82%~  3579 16218229
+#> 15 https://arabic.rt.com/middle_east/1180772-%D9%85%D8%A7%D9%83%~  3558 17790087
+#> 16 https://arabic.rt.com/middle_east/1180788-%D9%85%D8%A7%D9%83%~  3541 16235318
+#> 17 https://arabic.rt.com/technology/1180729-%D8%AF%D8%B1%D9%88%D~  2950 16223035
+#> 18 https://arabic.rt.com/middle_east/1180834-%D8%A7%D8%AD%D8%AA%~  2827 16244435
+#> 19 https://arabic.rt.com/middle_east/1180765-%D9%85%D8%A7%D9%83%~  2572 16218229
+#> 20 https://arabic.rt.com/world/1180609-%D9%88%D9%81%D8%A7%D8%A9-~  2471 16218229
+```
 
 ## Adaptive Time-Frame adjustment and Pagination
 

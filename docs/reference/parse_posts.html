@@ -149,9 +149,37 @@
                     output_raw <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "collecting posts"
 #&gt; [1] "try for the 1th time."
-#&gt; [1] "now collected 256 entries"</div><div class='input'>
+#&gt; [1] "now collected 272 entries"</div><div class='input'>
 <span class='co'># Parse postlist to R data.frame</span>
 <span class='va'>cnn_df</span> <span class='op'>&lt;-</span> <span class='va'>cnn_postlist</span> <span class='op'>%&gt;%</span> <span class='fu'>parse_posts</span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># Pull all link shares with URLs containing "rt.com" on December 7th, 2020</span>
+<span class='va'>rt_postlist</span> <span class='op'>&lt;-</span>
+<span class='fu'><a href='links.html'>links</a></span><span class='op'>(</span>token <span class='op'>=</span> <span class='fu'><a href='crowdtangle_token.html'>crowdtangle_token</a></span><span class='op'>(</span><span class='op'>)</span>,
+      count <span class='op'>=</span> <span class='fl'>1000</span>,
+      endDate <span class='op'>=</span> <span class='st'>'2020-12-07T23:59:59'</span>,
+      includeHistory <span class='op'>=</span> <span class='cn'>NULL</span>,
+      link <span class='op'>=</span> <span class='st'>"rt.com"</span>,
+      includeSummary<span class='op'>=</span> <span class='st'>'false'</span>,
+      offset <span class='op'>=</span> <span class='fl'>0</span>,
+      platforms <span class='op'>=</span> <span class='st'>'facebook'</span>,
+      searchField <span class='op'>=</span> <span class='st'>'Include_query_strings'</span>,
+      startDate <span class='op'>=</span> <span class='st'>'2020-12-07T00:00:00'</span>,
+      sortBy <span class='op'>=</span> <span class='st'>'date'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "collecting link shares"
+#&gt; [1] "try for the 1th time."
+#&gt; [1] "resetting END DATE to 2020-12-07T17:33:57"
+#&gt; [1] "Pausing Scripts until 2020-12-08 11:08:23"
+#&gt; [1] "sleep 31 secs then next batch"
+#&gt; [1] "try for the 1th time."
+#&gt; [1] "resetting END DATE to 2020-12-07T09:18:21"
+#&gt; [1] "Pausing Scripts until 2020-12-08 11:08:57"
+#&gt; [1] "sleep 31 secs then next batch"
+#&gt; [1] "try for the 1th time."
+#&gt; [1] "resetting END DATE to 2020-12-07T00:00:00"
+#&gt; [1] "now collected 2558 entries"</div><div class='input'>
+ <span class='co'># Parse postlist to R data.frame</span>
+<span class='va'>rt_df</span> <span class='op'>&lt;-</span> <span class='va'>rt_postlist</span> <span class='op'>%&gt;%</span> <span class='fu'>parse_posts</span><span class='op'>(</span><span class='op'>)</span>
 
 </div></pre>
   </div>
