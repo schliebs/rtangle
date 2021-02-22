@@ -3,21 +3,13 @@
 #' Pulls posts
 #'
 #' @param token A valid CT API Token
-#' @param accountTypes ...
-#' @param and ...
+#' @param accounts ...
 #' @param brandedContent ...
 #' @param count ...
 #' @param endDate ...
 #' @param includeHistory ...
-#' @param inAccountIds ...
-#' @param inListIds ...
 #' @param language ...
-#' @param minInteractions ...
-#' @param minSubscriberCount ...
-#' @param not ...
-#' @param notInAccountIds ...
-#' @param notInLstIds ...
-#' @param notInTitle ...
+#' @param listIds ...
 #' @param offset ...
 #' @param pageAdminTopCountry ...
 #' @param platforms ...
@@ -28,7 +20,7 @@
 #' @param timeframe ...
 #' @param types ...
 #' @param verified ...
-#' @param verifiedOnly ...
+#' @param weights Not yet implemented
 #' @param search10k A boolean signifying whether you have elavated access for higher count numbers.
 #' @param boolean_allowed A boolean signifying whether you have boolean term search enabled.
 #' @param output_raw A boolean signifying whether to output raw CT output or parse into df. Defaulting to `TRUE`.
@@ -46,72 +38,58 @@
 #'                     search10k = T,
 #'                     boolean_allowed = T,
 #'                     output_raw = TRUE)
-posts_search <- function(token,
-                         accountTypes = NULL,
-                         and = NULL,
+posts <- function(token,
+                         accounts = NULL,
                          brandedContent = "no_filter",
                          count = 10,
                          endDate = ct_now(),
                          includeHistory = NULL,
-                         inAccountIds = NULL,
-                         inListIds = NULL,
                          language = NULL,
+                         listIds = NULL,
                          minInteractions = 0,
-                         minSubscriberCount = 0,
-                         not = NULL,
-                         notInAccountIds = NULL,
-                         notInLstIds = NULL,
-                         notInTitle = NULL,
                          offset = 0,
                          pageAdminTopCountry = NULL,
-                         platforms = NULL,
-                         searchField = "text_fields_and_image_text",
                          searchTerm = "",
                          startDate = NULL,
                          sortBy = 'date',
                          timeframe = NULL,
                          types = NULL,
                          verified = "no_filter",
-                         verifiedOnly = "false",
                          search10k = FALSE,
                          boolean_allowed = FALSE,
                          output_raw = TRUE,
-                         error_wrapper = T
-                         ){
+                error_wrapper = T
+){
 
   print("collecting posts")
 
   params <- list('token' = token,
-                 'accountTypes' = accountTypes,
-                 'and' = and,
+                 'accounts' = accounts,
                  'brandedContent' = brandedContent,
                  'count' = count,
                  'endDate' = endDate,
                  'includeHistory' = includeHistory,
-                 'inAccountIds' = inAccountIds,
-                 'inListIds' = inListIds,
                  'language' = language,
+                 'listIds' = listIds,
                  'minInteractions' = minInteractions,
-                 'minSubscriberCount' = minSubscriberCount,
-                 'not' = not,
-                 'notInAccountIds' = notInAccountIds,
-                 'notInLstIds' = notInLstIds,
-                 'notInTitle' = notInTitle,
                  'offset' = offset,
                  'pageAdminTopCountry' = pageAdminTopCountry,
-                 'platforms' = platforms,
-                 'searchField' = searchField,
                  'searchTerm' =searchTerm,
                  'startDate' = startDate,
                  'sortBy' = 'date',
                  'timeframe' = timeframe,
                  'types' = types,
-                 'verified' = verified,
-                 'verifiedOnly' = verifiedOnly)
+                 'verified' = verified)
 
 
   # Check if nothing is violated
-  if(1==2) stop("Maximum range between startDate and endDate is 1 year.")
+  if(
+
+    (lubridate::fast_strptime(endDate,format = "%Y-%m-%dT%H:%M:%S") -
+     lubridate::fast_strptime(startDate,format = "%Y-%m-%dT%H:%M:%S")
+    ) >= lubridate::years(1)
+
+  ) stop("Maximum range between startDate and endDate is 1 year.")
 
 
   if(search10k == FALSE){
@@ -130,21 +108,10 @@ posts_search <- function(token,
 
     while((firstcall == T)|
           ifelse(test = exists(x ="result_content"),
-                 #yes
-                 yes = (length(result_content$pagination) != 0) &
-                       ifelse(test = exists(x ="result_content$pagination"),
-                              yes = (as.numeric(str_extract(result_content$pagination$nextPage,
-                                               "(?<=count=)[0-9]*"))
-                        >
-                        as.numeric(str_extract(result_content$pagination$nextPage,
-                                               "(?<=offset=)[0-9]*"))
-                        ),
-                        no = TRUE),
-                 #no
+                 yes = length(result_content$pagination) != 0,
                  no = TRUE)){
 
-    #print(params)
-
+      #print(params)
 
 
       if(firstcall == FALSE){
@@ -155,16 +122,13 @@ posts_search <- function(token,
       }
 
       lastpost <- lubridate::now()
-      result <- crowdtangle_multitry(endpoint = "posts/search",
-                      params = params,
-                      timeout = 200,
-                      n_tries = 10,
-                      possibly_wrapper = error_wrapper)
+      result <- crowdtangle_multitry(endpoint = "posts",
+                                     params = params,
+                                     timeout = 200,
+                                     n_tries = 10,
+                                     possibly_wrapper = error_wrapper)
 
       result_content <- result$content$result
-
-      print(result_content$pagination)
-
       postlist = append(postlist, result_content$posts)
 
       # new enddate
@@ -190,17 +154,55 @@ posts_search <- function(token,
   }
 }
 
+token <- "JNmeGpGGpptF0C7jyHtoblI2F8NEP8awZ5ne99YE"
+
 # system.time({
 #   out <-
-#     posts_search(token = crowdtangle_token(),
-#                  inAccountIds = "8323", #CNN example
-#                  searchTerm = "Trump",
-#                  startDate = "2013-12-21T00:00:00",
-#                  endDate = "2013-12-31T23:59:59",
-#                  count = 10000,
-#                  sortBy = 'date',
-#                  platforms = 'facebook',
-#                  search10k = T,
-#                  boolean_allowed = T,
-#                  output_raw = TRUE)
+#     posts(token = token,
+#          accounts = "199676426877938", #TRT World
+#          searchTerm = NULL,
+#          startDate = "2019-02-20T00:00:00",
+#          endDate = "2021-02-19T23:59:59",
+#          count = 10000,
+#          sortBy = 'date',
+#          search10k = T,
+#          boolean_allowed = T,
+#          output_raw = TRUE,
+#           error_wrapper = FALSE)
 # })
+
+
+#
+# params <-
+#   list(token = token,
+#        accounts = "199676426877938", #TRT World
+#                  searchTerm = NULL,
+#                  startDate = "2019-02-20T00:00:00",
+#                  endDate = "2021-02-19T23:59:59",
+#                  count = 10000,
+#                  sortBy = 'date')
+#
+# endpoint <- "posts"
+# timeout = 200
+#   url <- httr::modify_url("https://api.crowdtangle.com", path = endpoint)
+#
+#   resp <- httr::GET(url = url,
+#                     query = params,
+#                     httr::timeout(timeout))
+#
+#   if (httr::http_type(resp) != "application/json") {
+#     print(resp)
+#     stop("API did not return json", call. = TRUE)
+#   }
+#
+#   parsed <- jsonlite::fromJSON(httr::content(resp, "text"), simplifyVector = FALSE)
+#
+#   structure(
+#     list(
+#       content = parsed,
+#       path = endpoint,
+#       response = resp
+#     ),
+#     class = "crowdtangle_api"
+#   )
+

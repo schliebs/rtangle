@@ -41,6 +41,11 @@ crowdtangle_api <- function(endpoint,params = list(),timeout = 200) {
 
   parsed <- jsonlite::fromJSON(httr::content(resp, "text"), simplifyVector = FALSE)
 
+  if(parsed$status != 200){
+    print("error occured: ")
+    print(parsed)
+  }
+
   structure(
     list(
       content = parsed,
@@ -62,7 +67,9 @@ print.crowdtangle_api <- function(x, ...) {
 
 crowdtangle_multitry <- function(endpoint,
                                  params = list(),
-                                 timeout = 200,n_tries = 5){
+                                 timeout = 200,
+                                 n_tries = 5,
+                                 possibly_wrapper = TRUE){
 
   tries = 0
 
@@ -75,18 +82,24 @@ crowdtangle_multitry <- function(endpoint,
   ){
 
     # conservative sleeping to prevent 504 error
-    if(tries >= 0){
-      #print("lol erstmal schlafen damit vlt scheiss fehler weg geht")
+    if(tries > 0){
+      print("lol erstmal schlafen damit vlt scheiss fehler weg geht")
       Sys.sleep(30)
     }
 
     tries = tries+1
     print(paste0("try for the ",tries,"th time."))
 
-    ct_api_safe <- purrr::possibly(
-      .f = crowdtangle_api,
-      otherwise = list(content = list(status = "6666"))
+    if(possibly_wrapper == T){
+      ct_api_safe <- purrr::possibly(
+        .f = crowdtangle_api,
+        otherwise = list(content = list(status = "6666"))
       )
+    }else{
+      print("heyy")
+      ct_api_safe <- crowdtangle_api
+    }
+
 
     res <- ct_api_safe(endpoint = endpoint,
                         params = params,
