@@ -113,77 +113,81 @@ posts_search <- function(token,
   # Check if nothing is violated
   if(1==2) stop("Maximum range between startDate and endDate is 1 year.")
 
+  params$offset = NULL
 
   if(search10k == FALSE){
-    1+1
+
+    if(count > 100)stop("too high count requested")
+
   }
 
 
   if(search10k == TRUE){
 
-    params$offset = NULL
 
     if(count > 10000)stop("too high count requested")
 
-    postlist <- list()
-    firstcall <- TRUE
+  }
 
-    while((firstcall == T)|
-          ifelse(test = exists(x ="result_content"),
-                 #yes
-                 yes = (length(result_content$pagination) != 0) &
-                       ifelse(test = exists(x ="result_content$pagination"),
-                              yes = (as.numeric(str_extract(result_content$pagination$nextPage,
-                                               "(?<=count=)[0-9]*"))
-                        >
-                        as.numeric(str_extract(result_content$pagination$nextPage,
-                                               "(?<=offset=)[0-9]*"))
-                        ),
-                        no = TRUE),
-                 #no
-                 no = TRUE)){
+  postlist <- list()
+  firstcall <- TRUE
 
-    #print(params)
+  while((firstcall == T)|
+        ifelse(test = exists(x ="result_content"),
+               #yes
+               yes = (length(result_content$pagination) != 0) &
+                     ifelse(test = exists(x ="result_content$pagination"),
+                            yes = (as.numeric(str_extract(result_content$pagination$nextPage,
+                                             "(?<=count=)[0-9]*"))
+                      >
+                      as.numeric(str_extract(result_content$pagination$nextPage,
+                                             "(?<=offset=)[0-9]*"))
+                      ),
+                      no = TRUE),
+               #no
+               no = TRUE)){
+
+  #print(params)
 
 
 
-      if(firstcall == FALSE){
-        wait_till(from = lastpost,
-                  seconds = 11)
-        print("sleep 12 secs then next batch")
-        #print(params$endDate)
-      }
-
-      lastpost <- lubridate::now()
-      result <- crowdtangle_multitry(endpoint = "posts/search",
-                      params = params,
-                      timeout = 200,
-                      n_tries = 10,
-                      possibly_wrapper = error_wrapper)
-
-      result_content <- result$content$result
-
-      print(result_content$pagination)
-
-      postlist = append(postlist, result_content$posts)
-
-      # new enddate
-      if(length(result_content$posts) > 0){
-        params$endDate <-
-          result_content$posts[[length(result_content$posts)]]$date %>%
-          stringr::str_replace_all(" ","T")
-      }else{
-        print(paste0("0 results found for params:  ",paste0(params,collapse = "  |  ")))
-      }
-
-      firstcall <- FALSE
-
+    if(firstcall == FALSE){
+      wait_till(from = lastpost,
+                seconds = 11)
+      print("sleep 12 secs then next batch")
+      #print(params$endDate)
     }
 
-    print(paste0("now collected ",length(postlist)," entries"))
+    lastpost <- lubridate::now()
+    result <- crowdtangle_multitry(endpoint = "posts/search",
+                    params = params,
+                    timeout = 200,
+                    n_tries = 10,
+                    possibly_wrapper = error_wrapper)
 
+    result_content <- result$content$result
+
+    print(result_content$pagination)
+
+    postlist = append(postlist, result_content$posts)
+
+    # new enddate
+    if(length(result_content$posts) > 0){
+      params$endDate <-
+        result_content$posts[[length(result_content$posts)]]$date %>%
+        stringr::str_replace_all(" ","T")
+    }else{
+      print(paste0("0 results found for params:  ",paste0(params,collapse = "  |  ")))
+    }
+
+    firstcall <- FALSE
 
   }
+
+  print(paste0("now collected ",length(postlist)," entries"))
+
+
+
 
   if(output_raw == TRUE){
     return(postlist)
