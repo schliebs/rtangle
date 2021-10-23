@@ -87,7 +87,7 @@ posts <- function(token,
 
     (lubridate::fast_strptime(endDate,format = "%Y-%m-%dT%H:%M:%S") -
      lubridate::fast_strptime(startDate,format = "%Y-%m-%dT%H:%M:%S")
-    ) >= lubridate::years(1)
+    ) >= lubridate::days(366)
 
   ) stop("Maximum range between startDate and endDate is 1 year.")
 
