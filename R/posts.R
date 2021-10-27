@@ -154,7 +154,6 @@ posts <- function(token,
   }
 }
 
-token <- "JNmeGpGGpptF0C7jyHtoblI2F8NEP8awZ5ne99YE"
 
 # system.time({
 #   out <-
